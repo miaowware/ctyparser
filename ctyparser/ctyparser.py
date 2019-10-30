@@ -16,8 +16,7 @@ import zipfile
 import requests
 import feedparser
 
-
-def gen_cty_json():
+def gen_cty_json(feed_url,dl_url):
     try:
         old_cty = json.load(open('resources/cty.json'))['last_updated']
     except:
@@ -25,7 +24,7 @@ def gen_cty_json():
         print('Missing/Broken cty.json')
 
     try:
-        feed = feedparser.parse('http://www.country-files.com/category/big-cty/feed/')
+        feed = feedparser.parse(feed_url)
         update_url = feed.entries[0]['link']
         date_str = re.search(r'(\d{2}-\w+-\d{4})', update_url).group(1).title()
         update_date = datetime.strftime(datetime.strptime(date_str, '%d-%B-%Y'), '%Y%m%d')
@@ -37,7 +36,6 @@ def gen_cty_json():
         return False
 
     try:
-        dl_url = f'http://www.country-files.com/bigcty/download/bigcty-{update_date}.zip'
         rq = requests.get(dl_url)
         with open('cty.zip', 'wb') as downloaded_file:
             downloaded_file.write(rq.content)
@@ -97,5 +95,8 @@ def gen_cty_json():
 
 
 if __name__ == '__main__':
-    status = gen_cty_json()
+    feed_url = 'http://www.country-files.com/category/big-cty/feed/'
+    dl_url = 'http://www.country-files.com/bigcty/download/bigcty-{update_date}.zip'
+    status = gen_cty_json(feed_url,dl_url)
+
     print(status)
