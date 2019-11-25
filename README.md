@@ -2,6 +2,7 @@
 
 A CTY.DAT parser for modern amateur radio programs.
 
+[![PyPI](https://img.shields.io/pypi/v/ctyparser)](https://pypi.org/project/ctyparser/) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ctyparser) ![PyPI - License](https://img.shields.io/pypi/l/ctyparser)
 
 ## Installation
 
