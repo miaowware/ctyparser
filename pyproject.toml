@@ -1,0 +1,3 @@
+[build-system]
+# Minimum requirements for setup.py to execute.
+requires = ["setuptools", "wheel"] 
