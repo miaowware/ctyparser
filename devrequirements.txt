@@ -1,0 +1,8 @@
+# Tooling
+flake8
+mypy
+twine
+
+# Dependencies
+feedparser
+requests
