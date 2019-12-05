@@ -9,6 +9,6 @@ __webpage__ = "https://github.com/classabbyamp/ctyparser"
 __version__ = "2.0.0"
 
 __author__ = "classabbyamp, 0x5c"
-__email__ = "me@kb6.ee, 0x5c.dev@gmail.com"
+__email__ = "me@kb6.ee, dev@0x5c.io"
 
 __license__ = "MIT"
