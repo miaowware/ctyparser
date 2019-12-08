@@ -15,6 +15,7 @@ import re
 import os
 import collections
 from datetime import datetime
+import warnings
 
 import requests
 import feedparser
@@ -79,6 +80,10 @@ class BigCty(collections.abc.Mapping):
         with cty_file.open("r") as file:
             ctyjson = json.load(file)
             self.version = ctyjson.pop("version", None)
+            if self.version is None:
+                warnings.warn("Missing version", Warning)
+            elif f'VER{self.version}' not in ctyjson.keys():
+                warnings.warn("Invalid version", Warning)
             self._data = ctyjson
 
     def dump(self, cty_file: Union[str, os.PathLike]) -> None:
