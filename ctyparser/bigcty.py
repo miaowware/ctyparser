@@ -1,5 +1,5 @@
 """
-bigcty.py - part of classabbyamp/ctyparser
+bigcty.py - part of miaowware/ctyparser
 ---
 
 Copyright 2019 classabbyamp, 0x5c
