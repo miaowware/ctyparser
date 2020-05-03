@@ -14,21 +14,9 @@ Support: [![Discord](https://discordapp.com/api/guilds/656888365886734340/widget
 $ pip install ctyparser
 ```
 
+## API and CLI Documentation
 
-## API Reference
-
-*Coming soon. Refer to docstrings for now.*
-
-
-## CLI Usage
-
-**CLI is work in progress!**  
-Currently, only updating/creating a file named `cty.json` in the current working directory is supported.
-
-```none
-$ python3 -m ctyparser
-```
-
+See [read the docs url]()
 
 ## Copyright
 

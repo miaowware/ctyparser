@@ -26,28 +26,13 @@ default_feed = "http://www.country-files.com/category/big-cty/feed/"
 
 
 class BigCty(collections.abc.Mapping):
-    """BigCty
-    ------
+    """Class representing a BigCTY dataset.
+    Can be initialised with data by passing the path to a valid ``cty.json`` file to the constructor.
 
-    Class representing a BigCTY dataset.
-    Can be initialised with data by passing the path
-    to a valid 'cty.json' file to the constructor.
+    :param file_path: Location of the ``cty.json`` file to load.
+    :type file_path: str or os.PathLike, optional
 
-    Methods:
-
-    `.load()` a 'cty.json' file. Overwrites the internal data.
-
-    `.dump()` the data to a 'cty.json' file.
-
-    `.import_dat()` directly import data from a 'cty.dat' file.
-
-    `.update()` the data from the internet.
-
-    Attributes:
-
-    `.version`: the datestamp of the data, YYYYMMDD format.
-
-    `.formatted_version`: a more human friendly representation of the datestamp.
+    :var version: the datestamp of the data, ``YYYYMMDD`` format.
     """
     regex_version_entry = re.compile(r"VER(\d{8})")
     regex_feed_date = re.compile(r'(\d{2}-\w+-\d{4})')
@@ -63,6 +48,8 @@ class BigCty(collections.abc.Mapping):
                                  (?:~(?P<tz>[+-]?\d+(?:\.\d+)?)~)?""", re.X)
 
     def __init__(self, file_path: Union[str, os.PathLike, None] = None):
+        """Can be initialised with data by passing the path to a valid ``cty.json`` file to the constructor.
+        """
         self._data: dict = {}
         self.version = ""
 
@@ -70,10 +57,11 @@ class BigCty(collections.abc.Mapping):
             self.load(file_path)
 
     def load(self, cty_file: Union[str, os.PathLike]) -> None:
-        """Loads a cty.json file into the instance.
+        """Loads a ``cty.json`` file into the instance.
 
-        Args:
-            cty_file (str or os.PathLike): Path to the file to load.
+        :param cty_file: Path to the file to load.
+        :type cty_file: str or os.PathLike
+        :return: None
         """
         cty_file = pathlib.Path(cty_file)
         with cty_file.open("r") as file:
@@ -82,10 +70,11 @@ class BigCty(collections.abc.Mapping):
             self._data = ctyjson
 
     def dump(self, cty_file: Union[str, os.PathLike]) -> None:
-        """Dumps the data of the instance to a cty.json file.
+        """Dumps the data of the instance to a ``cty.json`` file.
 
-        Args:
-            cty_file (str or os.PathLike): Path to the file to dump to.
+        :param cty_file: Path to the file to dump to.
+        :type cty_file: str or os.PathLike
+        :return: None
         """
         cty_file = pathlib.Path(cty_file)
         datadump = self._data.copy()
@@ -94,10 +83,11 @@ class BigCty(collections.abc.Mapping):
             json.dump(datadump, file)
 
     def import_dat(self, dat_file: Union[str, os.PathLike]) -> None:
-        """Imports CTY data from a cty.dat file.
+        """Imports CTY data from a ``CTY.DAT`` file.
 
-        Args:
-            dat_file (str or os.PathLike): Path to the file to import.
+        :param dat_file: Path to the file to import.
+        :type dat_file: str or os.PathLike
+        :return: None
         """
         dat_file = pathlib.Path(dat_file)
         with dat_file.open("r") as file:
@@ -149,8 +139,9 @@ class BigCty(collections.abc.Mapping):
     def update(self) -> bool:
         """Upates the instance's data from the feed.
 
-        Returns:
-            True if an update was done, otherwise False.
+        :raises Exception: If there is no date in the feed.
+        :return: ``True`` if an update was done, otherwise ``False``.
+        :rtype: bool
         """
         with requests.Session() as session:
             feed = session.get(default_feed)
@@ -178,7 +169,7 @@ class BigCty(collections.abc.Mapping):
     @property
     def formatted_version(self) -> str:
         """Formatted representation of the version/date of the current BigCTY data.
-        "0000-00-00" if invalid datestamp."""
+        ``0000-00-00`` if invalid datestamp."""
         try:
             return datetime.strptime(self.version, "%Y%m%d").strftime("%Y-%m-%d")
         except ValueError:
@@ -197,6 +188,9 @@ class BigCty(collections.abc.Mapping):
     # --- Standard methods we should all implement ---
     # str(): Simply return what it would be for the underlaying dict
     def __str__(self):
+        """
+        :return: str(data)
+        """
         return str(self._data)
 
     # repr(): Class name, instance ID, and last_updated

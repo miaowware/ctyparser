@@ -2,6 +2,7 @@
 flake8
 mypy
 twine
+sphinx
 
 # Dependencies
 feedparser
