@@ -4,7 +4,7 @@ A CTY.DAT parser for modern amateur radio programs.
 
 Support: [![Discord](https://discordapp.com/api/guilds/656888365886734340/widget.png?style=shield)](https://discord.gg/SwyjdDN)
 
-[![PyPI](https://img.shields.io/pypi/v/ctyparser)](https://pypi.org/project/ctyparser/) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ctyparser) ![PyPI - License](https://img.shields.io/pypi/l/ctyparser)
+[![PyPI](https://img.shields.io/pypi/v/ctyparser)](https://pypi.org/project/ctyparser/) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ctyparser) ![PyPI - License](https://img.shields.io/pypi/l/ctyparser) [![Documentation Status](https://readthedocs.org/projects/ctyparser/badge/?version=latest)](https://ctyparser.readthedocs.io/en/latest/?badge=latest)
 
 ## Installation
 
@@ -16,7 +16,7 @@ $ pip install ctyparser
 
 ## API and CLI Documentation
 
-See [read the docs url]()
+Documentation is available on [ReadTheDocs](https://ctyparser.readthedocs.io/).
 
 ## Copyright
 

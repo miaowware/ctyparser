@@ -35,6 +35,6 @@ CLI Usage
 
 .. note:: CLI is a work in progress!
 
-Currently, only updating/creating a file named ``cty.json`` in the current working directory is supported.::
+Currently, only updating/creating a file named ``cty.json`` in the current working directory is supported::
 
     $ python3 -m ctyparser
