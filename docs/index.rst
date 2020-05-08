@@ -3,10 +3,6 @@ ctyparser
 
 A ``CTY.DAT`` parser for modern amateur radio programs.
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
 Installation
 ------------
 
