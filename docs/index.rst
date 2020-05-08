@@ -23,8 +23,6 @@ API
 .. module:: ctyparser
 
 .. autoclass:: BigCty
-    :members:
-
 
 CLI Usage
 ---------

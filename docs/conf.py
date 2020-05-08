@@ -56,3 +56,11 @@ html_theme = 'alabaster'
 html_static_path = ['_static']
 
 master_doc = 'index'
+
+# -- Options for autodoc -----------------------------------------------------
+
+autodoc_default_options = {
+    "members": True,
+    "member-order": "bysource",
+    "ignore-module-all": True,
+}
