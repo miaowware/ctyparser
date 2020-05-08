@@ -169,7 +169,10 @@ class BigCty(collections.abc.Mapping):
     @property
     def formatted_version(self) -> str:
         """Formatted representation of the version/date of the current BigCTY data.
-        ``0000-00-00`` if invalid datestamp."""
+
+        :getter: Returns version in ``YYYY-MM-DD`` format, or ``0000-00-00`` (if invalid date)
+        :type: str
+        """
         try:
             return datetime.strptime(self.version, "%Y%m%d").strftime("%Y-%m-%d")
         except ValueError:
