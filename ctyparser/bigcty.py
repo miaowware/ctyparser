@@ -33,6 +33,7 @@ class BigCty(collections.abc.Mapping):
     :type file_path: str or os.PathLike, optional
 
     :var version: the datestamp of the data, ``YYYYMMDD`` format.
+    :vartype version: str
     """
     regex_version_entry = re.compile(r"VER(\d{8})")
     regex_feed_date = re.compile(r'(\d{2}-\w+-\d{4})')
@@ -48,8 +49,6 @@ class BigCty(collections.abc.Mapping):
                                  (?:~(?P<tz>[+-]?\d+(?:\.\d+)?)~)?""", re.X)
 
     def __init__(self, file_path: Union[str, os.PathLike, None] = None):
-        """Can be initialised with data by passing the path to a valid ``cty.json`` file to the constructor.
-        """
         self._data: dict = {}
         self.version = ""
 
@@ -191,9 +190,6 @@ class BigCty(collections.abc.Mapping):
     # --- Standard methods we should all implement ---
     # str(): Simply return what it would be for the underlaying dict
     def __str__(self):
-        """
-        :return: str(data)
-        """
         return str(self._data)
 
     # repr(): Class name, instance ID, and last_updated
