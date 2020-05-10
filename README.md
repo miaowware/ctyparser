@@ -2,9 +2,9 @@
 
 A CTY.DAT parser for modern amateur radio programs.
 
-[![PyPI](https://img.shields.io/pypi/v/ctyparser)](https://pypi.org/project/ctyparser/) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ctyparser) ![PyPI - License](https://img.shields.io/pypi/l/ctyparser)
+Support: [![Discord](https://discordapp.com/api/guilds/656888365886734340/widget.png?style=shield)](https://discord.gg/SwyjdDN)
 
-**Support:** [![Discord](https://discordapp.com/api/guilds/656888365886734340/widget.png?style=shield)](https://discord.gg/SwyjdDN)
+[![PyPI](https://img.shields.io/pypi/v/ctyparser)](https://pypi.org/project/ctyparser/) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ctyparser) ![PyPI - License](https://img.shields.io/pypi/l/ctyparser) [![Documentation Status](https://readthedocs.org/projects/ctyparser/badge/?version=latest)](https://ctyparser.readthedocs.io/en/latest/?badge=latest)
 
 ## Installation
 
@@ -14,21 +14,9 @@ A CTY.DAT parser for modern amateur radio programs.
 $ pip install ctyparser
 ```
 
+## API and CLI Documentation
 
-## API Reference
-
-*Coming soon. Refer to docstrings for now.*
-
-
-## CLI Usage
-
-**CLI is work in progress!**  
-Currently, only updating/creating a file named `cty.json` in the current working directory is supported.
-
-```none
-$ python3 -m ctyparser
-```
-
+Documentation is available on [ReadTheDocs](https://ctyparser.readthedocs.io/).
 
 ## Copyright
 
