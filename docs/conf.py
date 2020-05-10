@@ -60,7 +60,7 @@ master_doc = 'index'
 # -- Options for autodoc -----------------------------------------------------
 
 autodoc_default_options = {
-    "members": True,
+    "members": None,
     "member-order": "bysource",
-    "ignore-module-all": True,
+    "ignore-module-all": None,
 }
