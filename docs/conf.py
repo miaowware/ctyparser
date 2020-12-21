@@ -21,7 +21,7 @@ sys.path.insert(0, os.path.abspath(".."))
 # -- Project information -----------------------------------------------------
 
 project = "ctyparser"
-copyright = "2020, classabbyamp, 0x5c"
+copyright = "2019-2020, classabbyamp, 0x5c"
 author = "classabbyamp, 0x5c"
 
 # The full version, including alpha/beta/rc tags

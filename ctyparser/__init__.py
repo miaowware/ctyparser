@@ -4,7 +4,7 @@ ctyparser
 
 A CTY.DAT parser for modern amateur radio programs.
 
-Copyright 2019 classabbyamp, 0x5c
+Copyright 2019-2020 classabbyamp, 0x5c
 Released under the terms of the MIT license.
 """
 
