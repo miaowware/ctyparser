@@ -14,7 +14,7 @@ Installation
 License
 =======
 
-Copyright 2020 classabbyamp, 0x5c
+Copyright 2019-2020 classabbyamp, 0x5c
 
 Released under the MIT License. See ``LICENSE`` for the full license text.
 
