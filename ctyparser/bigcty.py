@@ -50,7 +50,7 @@ class BigCty(collections.abc.Mapping):
 
     def __init__(self, file_path: Union[str, os.PathLike, None] = None):
         self._data: dict = {}
-        self.version = ""
+        self._version = ""
 
         if file_path is not None:
             self.load(file_path)
@@ -65,7 +65,7 @@ class BigCty(collections.abc.Mapping):
         cty_file = pathlib.Path(cty_file)
         with cty_file.open("r") as file:
             ctyjson = json.load(file)
-            self.version = ctyjson.pop("version", None)
+            self._version = ctyjson.pop("version", None)
             self._data = ctyjson
 
     def dump(self, cty_file: Union[str, os.PathLike]) -> None:
@@ -77,7 +77,7 @@ class BigCty(collections.abc.Mapping):
         """
         cty_file = pathlib.Path(cty_file)
         datadump = self._data.copy()
-        datadump["version"] = self.version
+        datadump["version"] = self._version
         with cty_file.open("w") as file:
             json.dump(datadump, file)
 
@@ -93,7 +93,7 @@ class BigCty(collections.abc.Mapping):
             cty_dict = dict()
 
             ver_match = re.search(self.regex_version_entry, file.read())
-            self.version = ver_match.group(1) if ver_match is not None else ""
+            self._version = ver_match.group(1) if ver_match is not None else ""
             file.seek(0)
 
             last = ''
@@ -152,7 +152,7 @@ class BigCty(collections.abc.Mapping):
             date_str = date_match.group(1).title()
             update_date = datetime.strftime(datetime.strptime(date_str, '%d-%B-%Y'), '%Y%m%d')
 
-            if self.version == update_date:
+            if self._version == update_date:
                 return False
 
             with tempfile.TemporaryDirectory() as temp:
@@ -173,9 +173,18 @@ class BigCty(collections.abc.Mapping):
         :type: str
         """
         try:
-            return datetime.strptime(self.version, "%Y%m%d").strftime("%Y-%m-%d")
+            return datetime.strptime(self._version, "%Y%m%d").strftime("%Y-%m-%d")
         except ValueError:
             return "0000-00-00"
+
+    @property
+    def version(self) -> str:
+        """The version/date of the current BigCTY data.
+
+        :getter: Returns version in ``YYYYMMDD`` format
+        :type: str
+        """
+        return self._version
 
     # --- Wrappers to implement dict-like functionality ---
     def __len__(self):
