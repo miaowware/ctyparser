@@ -1,2 +1,6 @@
+sphinx
+sphinx-autobuild
+-e git+https://github.com/miaowware/miaowware-sphinx-theme.git#egg=miaowware_sphinx_theme
+
 feedparser
 requests

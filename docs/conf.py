@@ -12,50 +12,56 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..'))
+
+import miaowware_sphinx_theme
+
+sys.path.insert(0, os.path.abspath(".."))
 
 
 # -- Project information -----------------------------------------------------
 
-project = 'ctyparser'
-copyright = '2020, classabbyamp, 0x5c'
-author = 'classabbyamp, 0x5c'
+project = "ctyparser"
+copyright = "2020, classabbyamp, 0x5c"
+author = "classabbyamp, 0x5c"
 
 # The full version, including alpha/beta/rc tags
-release = '2.0.0.post1'
+release = "2.0.0.post1"
 
 
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
+# extensions coming with Sphinx (named "sphinx.ext.*") or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc'
+    "sphinx.ext.autodoc"
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
-html_theme = 'alabaster'
+
+html_theme = "miaowware"
+html_theme_path = miaowware_sphinx_theme.get_html_theme_path()
+
+html_logo = "_static/miaowware_logo.png"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+# html_static_path = ["_static"]
 
-master_doc = 'index'
+master_doc = "index"
 
 # -- Options for autodoc -----------------------------------------------------
 
@@ -64,3 +70,5 @@ autodoc_default_options = {
     "member-order": "bysource",
     "ignore-module-all": None,
 }
+
+autodoc_typehints = "none"
