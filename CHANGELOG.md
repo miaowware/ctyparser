@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [2.1.0] - 2020-12-21
+### Changed
+- `.version` to a read-only property.
+
+
 ## [2.0.0] - 2019-11-25
 ### Added
 - Added the ability to import a cty.dat file.
@@ -25,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/miaowware/ctyparser/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/miaowware/ctyparser/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/miaowware/ctyparser/releases/tag/v2.1.0
 [2.0.0]: https://github.com/miaowware/ctyparser/releases/tag/v2.0.0
 [1.0.0]: https://github.com/miaowware/ctyparser/releases/tag/v1.0.0
