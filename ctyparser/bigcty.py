@@ -109,7 +109,8 @@ class BigCty(collections.abc.Mapping):
                     cty_dict[segments[7]] = {'entity': segments[0], 'cq': int(segments[1]),
                                              'itu': int(segments[2]), 'continent': segments[3],
                                              'lat': float(segments[4]), 'long': float(segments[5]),
-                                             'tz': -1*float(segments[6]), 'len': len(segments[7])}
+                                             'tz': -1*float(segments[6]), 'len': len(segments[7]),
+                                             'primary_pfx': segments[7]}
                     last = segments[7]
 
                 elif line != '' and line[0].isspace():
