@@ -110,7 +110,7 @@ class BigCty(collections.abc.Mapping):
                                              'itu': int(segments[2]), 'continent': segments[3],
                                              'lat': float(segments[4]), 'long': float(segments[5]),
                                              'tz': -1*float(segments[6]), 'len': len(segments[7]),
-                                             'main': segments[7]}
+                                             'primary_pfx': segments[7]}
                     last = segments[7]
 
                 elif line != '' and line[0].isspace():
