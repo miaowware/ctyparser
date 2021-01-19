@@ -5,7 +5,7 @@ bigcty.py - part of miaowware/ctyparser
 Copyright 2019-2020 classabbyamp, 0x5c
 Released under the terms of the MIT license.
 """
-
+ 
 
 import json
 import tempfile
@@ -37,6 +37,28 @@ class BigCty(collections.abc.Mapping):
     """
     regex_version_entry = re.compile(r"VER(\d{8})")
     regex_feed_date = re.compile(r'(\d{2}-\w+-\d{4})')
+    
+    # sample data for regex_dat:
+    # IB9
+    # =II0GDF/9
+    # =IT9ACJ/I/BO
+    # AA0(4)[7]
+    
+    # explanation:
+    # starting with optional '=' 
+    #     (If an alias prefix is preceded by ‘=’, this indicates that the 
+    #      prefix is to be treated as a full callsign, i.e. must be an exact match.)
+    # Named group 'prefix': one or more of characters (both cases), numbers and '/'
+    # Optional non-capturing group, named group 'cq' inside of '()' capturing numbers 
+    #     ((#) Override CQ Zone)
+    # Optional non-capturing group, named group 'itu' inside of '[]' capturing numbers 
+    #     ([#] Override ITU Zone)
+    # Optional named group 'latlong', inside of '<>' two named groups 'lat' and 'long' separated by '/'
+    #     (<#/#> Override latitude/longitude)
+    # Optional non-capturing group, named group 'continent' inside of '{}' capturing characters 
+    #     ({aa} Override Continent)
+    # Optional non-capturing group, named group 'tz' inside of '~~' 
+    #     (~#~ Override local time offset from GMT)
     regex_dat = re.compile(r"""=?(?P<prefix>[a-zA-Z0-9/]+)
                                  (?:\((?P<cq>\d+)\))?
                                  (?:\[(?P<itu>\d+)\])?
@@ -92,32 +114,56 @@ class BigCty(collections.abc.Mapping):
         with dat_file.open("r") as file:
             cty_dict = dict()
 
+            # get the version from the file, set filepointer to beginning of file afterwards
             ver_match = re.search(self.regex_version_entry, file.read())
             self._version = ver_match.group(1) if ver_match is not None else ""
             file.seek(0)
 
+            # variable to store last DXCC introduction with countryname, zones, etc. for further use
             last = ''
+            
             while True:
+                # read a line
                 line = file.readline().rstrip('\x0D').strip(':')
                 if not line:
                     break
+                # check if the line introduces new DXCC (line is starting with character)
+                # samples:
+                # Switzerland:              14:  28:  EU:   46.87:    -8.12:    -1.0:  HB:
+                # Sicily:                   15:  28:  EU:   37.50:   -14.00:    -1.0:  *IT9:
                 if line != '' and line[0].isalpha():
+                    # split line by ':' and remove spaces
                     segments = [x.strip() for x in line.split(':')]
+                    # check if last segment starts with '*'
+                    # A “*” preceding this prefix indicates that the country is on the DARC WAEDC 
+                    # list, and counts in CQ-sponsored contests, but not ARRL-sponsored contests
                     if segments[7][0] == '*':
+                        # remove '*' and add a marker to country name
                         segments[7] = segments[7][1:]
                         segments[0] += ' (not DXCC)'
+                    # store data in dict
                     cty_dict[segments[7]] = {'entity': segments[0], 'cq': int(segments[1]),
                                              'itu': int(segments[2]), 'continent': segments[3],
                                              'lat': float(segments[4]), 'long': float(segments[5]),
                                              'tz': -1*float(segments[6]), 'len': len(segments[7]),
                                              'primary_pfx': segments[7]}
+                    # store country name, which is key of cty_dict for use with continued data
                     last = segments[7]
 
+                # check if the line continues DXCC (line is starting with space)
+                # samples:
+                # IB9,ID9,IE9,IF9,II9,IJ9,IO9,IQ9,IR9,IT9,IU9,IW9,IY9,=II0GDF/9,=IQ1QQ/9,=IQ6KX/9,=IT9ACJ/I/BO,
+                # =IT9YBL/SG,=IT9ZSB/LH,=IW0HBY/9;
                 elif line != '' and line[0].isspace():
+                    # remove spaces, trailing separators and split by ','
                     overrides = line.strip().rstrip(';').rstrip(',').split(',')
+                    
                     for item in overrides:
+                        # check if prefix/call is not already in dict
                         if item not in cty_dict.keys():
+                            # get the already stored data from primary prefix
                             data = cty_dict[last]
+                            # apply regex to extract the prefix and overrides
                             match = re.search(self.regex_dat, item)
                             if match is None:
                                 continue
