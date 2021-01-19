@@ -146,7 +146,7 @@ class BigCty(collections.abc.Mapping):
                                              'itu': int(segments[2]), 'continent': segments[3],
                                              'lat': float(segments[4]), 'long': float(segments[5]),
                                              'tz': -1*float(segments[6]), 'len': len(segments[7]),
-                                             'primary_pfx': segments[7]}
+                                             'primary_pfx': segments[7], 'exact_match': False}
                     # store country name, which is key of cty_dict for use with continued data
                     last = segments[7]
 
@@ -178,6 +178,8 @@ class BigCty(collections.abc.Mapping):
                                 data['continent'] = match.group("continent")
                             if match.group("tz"):
                                 data['tz'] = -1 * float(match.group("tz"))
+                            if item.startswith('='):
+                                data['exact_match'] = True
                             prefix = match.group("prefix")
                             cty_dict[prefix] = data
         self._data = cty_dict
