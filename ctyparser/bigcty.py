@@ -5,7 +5,7 @@ bigcty.py - part of miaowware/ctyparser
 Copyright 2019-2020 classabbyamp, 0x5c
 Released under the terms of the MIT license.
 """
- 
+
 
 import json
 import tempfile
