@@ -37,28 +37,6 @@ class BigCty(collections.abc.Mapping):
     """
     regex_version_entry = re.compile(r"VER(\d{8})")
     regex_feed_date = re.compile(r'(\d{2}-\w+-\d{4})')
-    
-    # sample data for regex_dat:
-    # IB9
-    # =II0GDF/9
-    # =IT9ACJ/I/BO
-    # AA0(4)[7]
-    
-    # explanation:
-    # starting with optional '=' 
-    #     (If an alias prefix is preceded by ‘=’, this indicates that the 
-    #      prefix is to be treated as a full callsign, i.e. must be an exact match.)
-    # Named group 'prefix': one or more of characters (both cases), numbers and '/'
-    # Optional non-capturing group, named group 'cq' inside of '()' capturing numbers 
-    #     ((#) Override CQ Zone)
-    # Optional non-capturing group, named group 'itu' inside of '[]' capturing numbers 
-    #     ([#] Override ITU Zone)
-    # Optional named group 'latlong', inside of '<>' two named groups 'lat' and 'long' separated by '/'
-    #     (<#/#> Override latitude/longitude)
-    # Optional non-capturing group, named group 'continent' inside of '{}' capturing characters 
-    #     ({aa} Override Continent)
-    # Optional non-capturing group, named group 'tz' inside of '~~' 
-    #     (~#~ Override local time offset from GMT)
     regex_dat = re.compile(r"""=?(?P<prefix>[a-zA-Z0-9/]+)
                                  (?:\((?P<cq>\d+)\))?
                                  (?:\[(?P<itu>\d+)\])?
