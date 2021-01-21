@@ -14,6 +14,7 @@ import pathlib
 import re
 import os
 import collections
+import copy
 from datetime import datetime
 
 import requests
@@ -127,7 +128,7 @@ class BigCty(collections.abc.Mapping):
                     for item in overrides:
                         if item not in cty_dict.keys():
                             # get the already stored data from primary prefix
-                            data = dict(cty_dict[last])
+                            data = copy.deepcopy(cty_dict[last])
                             # apply regex to extract the prefix and overrides
                             match = re.search(self.regex_dat, item)
                             if match is None:
