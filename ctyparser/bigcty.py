@@ -14,6 +14,7 @@ import pathlib
 import re
 import os
 import collections
+import copy
 from datetime import datetime
 
 import requests
@@ -92,17 +93,23 @@ class BigCty(collections.abc.Mapping):
         with dat_file.open("r") as file:
             cty_dict = dict()
 
+            # get the version from the file
             ver_match = re.search(self.regex_version_entry, file.read())
             self._version = ver_match.group(1) if ver_match is not None else ""
             file.seek(0)
 
+            # stores the previous prefix for the next iteration
             last = ''
+            
             while True:
-                line = file.readline().rstrip('\x0D').strip(':')
+                line = file.readline().rstrip('\r').strip(':')  # remove unnecessary carriage returns and colons
                 if not line:
                     break
+                # check if the line introduces new DXCC
                 if line != '' and line[0].isalpha():
+                    # split line into fields at delimiters
                     segments = [x.strip() for x in line.split(':')]
+                    # check if this entity is not a DXCC
                     if segments[7][0] == '*':
                         segments[7] = segments[7][1:]
                         segments[0] += ' (not DXCC)'
@@ -110,14 +117,19 @@ class BigCty(collections.abc.Mapping):
                                              'itu': int(segments[2]), 'continent': segments[3],
                                              'lat': float(segments[4]), 'long': float(segments[5]),
                                              'tz': -1*float(segments[6]), 'len': len(segments[7]),
-                                             'primary_pfx': segments[7]}
+                                             'primary_pfx': segments[7], 'exact_match': False}
+                    # store the current prefix for the next iteration
                     last = segments[7]
 
+                # check if the line continues a DXCC
                 elif line != '' and line[0].isspace():
                     overrides = line.strip().rstrip(';').rstrip(',').split(',')
+                    
                     for item in overrides:
                         if item not in cty_dict.keys():
-                            data = cty_dict[last]
+                            # get the already stored data from primary prefix
+                            data = copy.deepcopy(cty_dict[last])
+                            # apply regex to extract the prefix and overrides
                             match = re.search(self.regex_dat, item)
                             if match is None:
                                 continue
@@ -132,6 +144,8 @@ class BigCty(collections.abc.Mapping):
                                 data['continent'] = match.group("continent")
                             if match.group("tz"):
                                 data['tz'] = -1 * float(match.group("tz"))
+                            if item.startswith('='):
+                                data['exact_match'] = True
                             prefix = match.group("prefix")
                             cty_dict[prefix] = data
         self._data = cty_dict
