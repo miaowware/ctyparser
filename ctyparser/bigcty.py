@@ -172,8 +172,13 @@ class BigCty(collections.abc.Mapping):
 
             with tempfile.TemporaryDirectory() as temp:
                 path = pathlib.PurePath(temp)
-                dl_url = f'http://www.country-files.com/bigcty/download/bigcty-{update_date}.zip'  # TODO: Issue #10
+                dl_url = f'http://www.country-files.com/bigcty/download/{update_date[:4]}/bigcty-{update_date}.zip'  # TODO: Issue #10
                 rq = session.get(dl_url)
+                if rq.status_code == 404:
+                    dl_url = f'http://www.country-files.com/bigcty/download/bigcty-{update_date}.zip'
+                    rq = session.get(dl_url)
+                    if rq.status_code != 200:
+                        raise Exception(f"Unable to find and download bigcty-{update_date}.zip")
                 with open(path / 'cty.zip', 'wb+') as file:
                     file.write(rq.content)
                     zipfile.ZipFile(file).extract('cty.dat', path=str(path))  # Force cast as str because mypy
