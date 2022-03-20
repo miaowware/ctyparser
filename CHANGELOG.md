@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+
+## [2.2.1] - 2022-03-15
 ### Fixed
 - Error when updating caused by upstream download URL change.
 
@@ -38,7 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/miaowware/ctyparser/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/miaowware/ctyparser/compare/v2.2.1...HEAD
+[2.2.1]: https://github.com/miaowware/ctyparser/releases/tag/v2.2.1
 [2.2.0]: https://github.com/miaowware/ctyparser/releases/tag/v2.2.0
 [2.1.0]: https://github.com/miaowware/ctyparser/releases/tag/v2.1.0
 [2.0.0]: https://github.com/miaowware/ctyparser/releases/tag/v2.0.0
