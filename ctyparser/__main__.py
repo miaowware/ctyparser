@@ -2,7 +2,7 @@
 ctyparser commandline interface
 ---
 
-Copyright 2019-2020 classabbyamp, 0x5c
+Copyright 2019-2022 classabbyamp, 0x5c
 Released under the terms of the MIT license.
 """
 
