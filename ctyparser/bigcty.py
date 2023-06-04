@@ -174,14 +174,16 @@ class BigCty(collections.abc.Mapping):
             with tempfile.TemporaryDirectory() as temp:
                 path = pathlib.PurePath(temp)
                 page = session.get(update_url)
+                if page.status_code != 200:
+                    raise Exception(f"Unable to find and download bigcty-{update_date}.zip")
                 tree = html.fromstring(page.content)
-                dl_url = tree.xpath("//a[contains(@href,'zip')]/@href")[0]
+                link_urls = tree.xpath("//a[contains(@href,'zip')]/@href")
+                if len(link_urls) == 0:
+                    raise Exception(f"Unable to find link to bigcty-{update_date}.zip")
+                dl_url = link_urls[0]
                 rq = session.get(dl_url)
-                if rq.status_code == 404:
-                    dl_url = f'http://www.country-files.com/bigcty/download/bigcty-{update_date}.zip'
-                    rq = session.get(dl_url)
-                    if rq.status_code != 200:
-                        raise Exception(f"Unable to find and download bigcty-{update_date}.zip")
+                if rq.status_code != 200:
+                    raise Exception(f"Unable to find and download bigcty-{update_date}.zip")
                 with open(path / 'cty.zip', 'wb+') as file:
                     file.write(rq.content)
                     zipfile.ZipFile(file).extract('cty.dat', path=str(path))  # Force cast as str because mypy
