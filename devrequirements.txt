@@ -7,3 +7,4 @@ sphinx
 # Dependencies
 feedparser
 requests
+lxml
