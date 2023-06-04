@@ -21,6 +21,7 @@ import requests
 import feedparser
 
 from typing import Union
+from lxml import html
 
 
 default_feed = "http://www.country-files.com/category/big-cty/feed/"
@@ -172,7 +173,9 @@ class BigCty(collections.abc.Mapping):
 
             with tempfile.TemporaryDirectory() as temp:
                 path = pathlib.PurePath(temp)
-                dl_url = f'http://www.country-files.com/bigcty/download/{update_date[:4]}/bigcty-{update_date}.zip'  # TODO: Issue #10
+                page = session.get(update_url)
+                tree = html.fromstring(page.content)
+                dl_url = tree.xpath("//a[contains(@href,'zip')]/@href")[0]
                 rq = session.get(dl_url)
                 if rq.status_code == 404:
                     dl_url = f'http://www.country-files.com/bigcty/download/bigcty-{update_date}.zip'
